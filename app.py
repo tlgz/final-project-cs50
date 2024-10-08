@@ -25,7 +25,13 @@ def login():
 @app.route('/register')
 def register():
      
-     return render_template("register.html")#sup
+     if request.method == "POST":
+          if not request.form.get("username"):
+               
+
+
+     return render_template("register.html")
+
 
 
     
