@@ -1,5 +1,4 @@
 
-
 import hashlib
 
 def hash_string(string):
