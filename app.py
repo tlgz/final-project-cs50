@@ -2,8 +2,10 @@ from flask import Flask, flash, redirect, render_template, request, session,url_
 import sqlite3
 import requirements as req
 from flask_session import Session
+import requests
+from config import OMDB_API_KEY,app_secret_key
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./static")
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 
@@ -25,11 +27,26 @@ def main():
 
     return render_template("index.html")
 
-@app.route('/apology')
-def apology():
+
+@app.route('/post', methods=['GET', 'POST'])
+def post(): 
+    if session.get("user_id") is None:
+            return redirect("/login")
     
-    result = request.args.get("result")
-    return render_template("apology.html", result=result)
+
+
+    if request.method == "POST":
+        movie_name = request.form.get("moviename")
+        
+        pyynti = requests.get(f"http://www.omdbapi.com/?t={movie_name}&apikey={OMDB_API_KEY}")
+        
+        if pyynti.status_code == 200:
+            data = pyynti.json()  # Parse JSON data from the response
+            print(data)
+
+
+
+    return render_template("post.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login(): 
@@ -84,13 +101,21 @@ def register():
 
 @app.route("/logout")
 def logout():
+    if session.get("user_id") is None:
+            return redirect("/login")
     session["user_id"] = None
     return redirect("/")
 
 
     
     
-
+@app.route('/apology')
+def apology():
+    if session.get("user_id") is None:
+            return redirect("/login")
+    
+    result = request.args.get("result")
+    return render_template("apology.html", result=result)
 
 
 
@@ -99,6 +124,8 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.secret_key = 'jlkkklTestkey'
+    
+    
+    app.secret_key = app_secret_key
     app.run(debug=True)
 
