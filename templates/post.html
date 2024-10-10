@@ -1,12 +1,53 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Welcome
+    Post
 {% endblock %}
 
 {% block main %}
 
+{% if request.method == "GET" %}
+<form action="/post" method="post">
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="moviename" placeholder="Search with movie name" type="text">
+    </div>
 
-<button class="top-50 start-50">hi</button>
+    <button class="btn btn-primary" type="submit">search</button>
+</form>
+{%endif%}
+{% if request.method == "POST" %}
+  <form action="/posted" method="post">
+    <div class="form-check form-check-inline">
+        
+        <i class="bi bi-star-fill bi-star"id="1"></i>
+      </div>
+      <div class="form-check form-check-inline">
+        
+        <i class="bi bi-star-fill bi-star"id="2"></i>
+      </div>
+      <div class="form-check form-check-inline">
+        
+        <i class="bi bi-star-fill bi-star"id="3"></i>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <i class="bi bi-star-fill bi-star" id="4"></i>
+      </div>
+      <div class="form-check form-check-inline">
+        <i class="bi bi-star-fill bi-star"id="5"></i>
+      </div>
+      
+
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Review</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+    <button class="btn btn-primary" type="submit">Post</button>
+</form>
+{%endif%}
+
+<script defer src="{{ url_for('static', filename='stars.js') }}">
+   
+</script>
 
 {% endblock %}
