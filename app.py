@@ -36,22 +36,54 @@ def post():
 
 
     if request.method == "POST":
+        if not request.form.get("moviename"):
+            return redirect(url_for('apology', result="Please insert Movie name")) 
         movie_name = request.form.get("moviename")
         
         pyynti = requests.get(f"http://www.omdbapi.com/?t={movie_name}&apikey={OMDB_API_KEY}")
         
         if pyynti.status_code == 200:
-            data = pyynti.json()  # Parse JSON data from the response
-            print(data)
+            data = pyynti.json()
+            if data.get('Response') == 'False':
+                return redirect(url_for('apology', result="Movie not found"))
+            movietitle=data["Title"]
+            imageurl=data["Poster"]
+            
+
+
+
+        return render_template("post.html",movietitle=movietitle,imageurl=imageurl)
+        
 
 
 
     return render_template("post.html")
 
+
+@app.route('/posted', methods=['GET', 'POST'])
+def posted(): 
+    if session.get("user_id") is None:
+            return redirect("/login")
+    
+    if request.method == "POST":
+        1==1
+        if not request.form.get("reviewtext"):
+            return redirect(url_for('apology', result="Please enter review text"))
+        if not request.form.get("selectedStars"):
+             return redirect(url_for('apology', result="Please enter stars amount"))
+    db_cursor.execute("INSERT INTO posts (userid,movietitle,imageurl,stars,review) VALUES (?,?,?,?,?)", \
+    ((session["user_id"]),request.form.get("movietitle"),request.form.get("imageurl"),request.form.get("selectedStars"),request.form.get("reviewtext")))
+    db.commit()
+             
+    return redirect("/")     
+    
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login(): 
 
     if request.method == "POST":
+        print(request.form.get("username"))
         if not request.form.get("username"):
             return redirect(url_for('apology', result="Please insert username"))     
         if not request.form.get("password"):
@@ -111,8 +143,7 @@ def logout():
     
 @app.route('/apology')
 def apology():
-    if session.get("user_id") is None:
-            return redirect("/login")
+   
     
     result = request.args.get("result")
     return render_template("apology.html", result=result)

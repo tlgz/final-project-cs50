@@ -17,30 +17,38 @@
 {%endif%}
 {% if request.method == "POST" %}
   <form action="/posted" method="post">
+    <div><h2 name="mmovietitle">{{movietitle}}</h2>
+      <input type="hidden" name="movietitle" value="{{movietitle}}">
+      <input type="hidden" name="imageurl" value="{{imageurl}}">
+        <img src="{{imageurl}}"style="width: 20%; height: auto;" name = "iimageurl"></div>
+        <input type="hidden" id="selectedStars" name="selectedStars" value="">
+    
     <div class="form-check form-check-inline">
         
-        <i class="bi bi-star-fill bi-star"id="1"></i>
+
+        
+        <i class="bi bi-star-fill bi-star"id="1" name="1" onclick="selectStar(1)"></i>
       </div>
       <div class="form-check form-check-inline">
         
-        <i class="bi bi-star-fill bi-star"id="2"></i>
+        <i class="bi bi-star-fill bi-star"id="2" name="2" onclick="selectStar(2)"></i>
       </div>
       <div class="form-check form-check-inline">
         
-        <i class="bi bi-star-fill bi-star"id="3"></i>
+        <i class="bi bi-star-fill bi-star"id="3" name="3" onclick="selectStar(3)"></i>
       </div>
 
       <div class="form-check form-check-inline">
-        <i class="bi bi-star-fill bi-star" id="4"></i>
+        <i class="bi bi-star-fill bi-star" id="4" name="4" onclick="selectStar(4)"></i>
       </div>
       <div class="form-check form-check-inline">
-        <i class="bi bi-star-fill bi-star"id="5"></i>
+        <i class="bi bi-star-fill bi-star"id="5" name="5" onclick="selectStar(5)"></i>
       </div>
       
 
     <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Review</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <label for="exampleFormControlTextarea1" class="form-label">Review max 600 characters</label>
+        <textarea class="form-control" id="reviewtext" name="reviewtext" rows="3" maxlength="600"></textarea>
       </div>
     <button class="btn btn-primary" type="submit">Post</button>
 </form>
