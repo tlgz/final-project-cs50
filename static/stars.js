@@ -13,6 +13,7 @@
         one.classList.remove("bi-star")
 
 
+
     } );
     two.addEventListener("click", (event) => {
         el.forEach(element => {
@@ -50,3 +51,8 @@
         five.classList.remove("bi-star") 
      } );
     
+
+     function selectStar(rating) {
+    
+        document.getElementById('selectedStars').value = rating;
+     }
