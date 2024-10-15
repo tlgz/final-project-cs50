@@ -4,6 +4,8 @@ import requirements as req
 from flask_session import Session
 import requests
 from config import OMDB_API_KEY,app_secret_key
+from datetime import datetime
+
 
 app = Flask(__name__, static_folder="./static")
 app.config["SESSION_PERMANENT"] = False
@@ -21,17 +23,23 @@ app= Flask(__name__)
 def main():
     if session.get("user_id") is None:
             return redirect("/login")
+    post_data= db_cursor.execute("Select posts.*,users.username from posts join users on posts.userid = users.id order by time DESC").fetchall()
+    
+    for tuple in (post_data):
+         print(tuple)
+         print(tuple[1])
 
     
     
 
-    return render_template("index.html")
+    return render_template("index.html", post_data=post_data)
 
 
 @app.route('/post', methods=['GET', 'POST'])
 def post(): 
     if session.get("user_id") is None:
             return redirect("/login")
+    
     
 
 
@@ -67,12 +75,13 @@ def posted():
     
     if request.method == "POST":
         1==1
+        time = datetime.now()
         if not request.form.get("reviewtext"):
             return redirect(url_for('apology', result="Please enter review text"))
         if not request.form.get("selectedStars"):
              return redirect(url_for('apology', result="Please enter stars amount"))
-    db_cursor.execute("INSERT INTO posts (userid,movietitle,imageurl,stars,review) VALUES (?,?,?,?,?)", \
-    ((session["user_id"]),request.form.get("movietitle"),request.form.get("imageurl"),request.form.get("selectedStars"),request.form.get("reviewtext")))
+    db_cursor.execute("INSERT INTO posts (userid,movietitle,imageurl,stars,review,time) VALUES (?,?,?,?,?,?)", \
+    ((session["user_id"]),request.form.get("movietitle"),request.form.get("imageurl"),request.form.get("selectedStars"),request.form.get("reviewtext"),time))
     db.commit()
              
     return redirect("/")     
