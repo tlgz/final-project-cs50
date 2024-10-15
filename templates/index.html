@@ -6,6 +6,58 @@
 
 {% block main %}
 
+{%for tuple in (post_data):%}
+<div class="card" style="width: 35rem; margin-left: auto; margin-right: auto; ">
+    <img src="{{tuple[2]}}" class="card-img-top" style="max-width: 120px; max-height: auto; display: block; margin: 0 auto;">
+    <div class="card-body">
+    
 
+      <h5 class="card-title">{{tuple[1]}}</h5>
+      <p class="fw-light text-secondary">Review posted by: {{tuple[6]}}</p>
+      {%if tuple[3]==1%}
+      <i class="bi bi-star-fill "id="1" name="1"></i>
+      <i class="bi bi-star-fill bi-star"id="2" name="2"></i>
+      <i class="bi bi-star-fill bi-star"id="3" name="3"></i>
+      <i class="bi bi-star-fill bi-star"id="4" name="4"></i>
+      <i class="bi bi-star-fill bi-star"id="5" name="5"></i>
+      {%endif%}
+      {%if tuple[3]==2%}
+      <i class="bi bi-star-fill "id="1" name="1"></i>
+      <i class="bi bi-star-fill "id="2" name="2"></i>
+      <i class="bi bi-star-fill bi-star"id="3" name="3"></i>
+      <i class="bi bi-star-fill bi-star"id="4" name="4"></i>
+      <i class="bi bi-star-fill bi-star"id="5" name="5"></i>
+      {%endif%}
+      {%if tuple[3]==3%}
+      <i class="bi bi-star-fill "id="1" name="1"></i>
+      <i class="bi bi-star-fill "id="2" name="2"></i>
+      <i class="bi bi-star-fill r"id="3" name="3"></i>
+      <i class="bi bi-star-fill bi-star"id="4" name="4"></i>
+      <i class="bi bi-star-fill bi-star"id="5" name="5"></i>
+      {%endif%}
+      {%if tuple[3]==4%}
+      <i class="bi bi-star-fill "id="1" name="1"></i>
+      <i class="bi bi-star-fill "id="2" name="2"></i>
+      <i class="bi bi-star-fill "id="3" name="3"></i>
+      <i class="bi bi-star-fill "id="4" name="4"></i>
+      <i class="bi bi-star-fill bi-star"id="5" name="5"></i>
+      {%endif%}
+      {%if tuple[3]==5%}
+      <i class="bi bi-star-fill "id="1" name="1"></i>
+      <i class="bi bi-star-fill "id="2" name="2"></i>
+      <i class="bi bi-star-fill "id="3" name="3"></i>
+      <i class="bi bi-star-fill "id="4" name="4"></i>
+      <i class="bi bi-star-fill "id="5" name="5"></i>
+      {%endif%}
+      
+      
+      <p class="card-text">{{tuple[4]}}</p>
+      
+    </div>
+  </div>
+  <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+  
+  </div>
+{%endfor%}
 
 {% endblock %}
