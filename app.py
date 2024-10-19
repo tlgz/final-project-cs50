@@ -24,15 +24,15 @@ def main():
     if session.get("user_id") is None:
             return redirect("/login")
     post_data= db_cursor.execute("Select posts.*,users.username from posts join users on posts.userid = users.id order by time DESC").fetchall()
-    
-    for tuple in (post_data):
-         print(tuple)
-         print(tuple[1])
-
+    star_data= db_cursor.execute("select movietitle, AVG(stars),imageurl from posts Group by movietitle order by AVG(stars) desc limit 3").fetchall()
+    print(star_data)
     
     
 
-    return render_template("index.html", post_data=post_data)
+    
+    
+
+    return render_template("index.html", post_data=post_data ,star_data=star_data)
 
 
 @app.route('/post', methods=['GET', 'POST'])
@@ -102,7 +102,7 @@ def login():
         if not user_details:
             return redirect(url_for('apology', result="User not found")) 
         hash_value= req.hash_string(request.form.get("password"))
-        print(user_details)
+        
         if user_details[0][2]!=hash_value:
             return redirect(url_for('apology', result="incorrect password")) 
         rows = db_cursor.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),)).fetchall()
