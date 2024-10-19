@@ -5,11 +5,45 @@
 {% endblock %}
 
 {% block main %}
+     
+  
+  
+    
 
-{%for tuple in (post_data):%}
-<div class="card" style="width: 35rem; margin-left: auto; margin-right: auto; ">
-    <img src="{{tuple[2]}}" class="card-img-top" style="max-width: 120px; max-height: auto; display: block; margin: 0 auto;">
-    <div class="card-body">
+    
+    <div class="row">
+    <div class="col-md-3">
+    
+      <div class="card" style="width: 10">
+        <h6 class="">Top Rated Movies</h4>
+        {%for tuple in star_data:%}
+        <div class="card-body text-center">
+          <img src="{{tuple[2]}}" class="card-img-top" style="max-width: 30px; max-height: auto; display: block; margin: 0 auto;">
+          <p class="card-text ">{{tuple[0]}}</p>
+          <div class="row justify-content-center">
+            <i class="bi bi-star-fill "id="1" name="1"></i>
+            <p class="fw-light ">{{tuple[1]}}</p>
+          </div>
+        </div>
+        {%endfor%}
+
+      </div>
+      
+
+
+    </div>
+
+    
+    
+      <div class="col-md-7">
+      
+      
+
+        {%for tuple in (post_data):%}
+    
+      <div class="card" style="width: 35rem; margin-left: auto; margin-right: auto; ">
+      <img src="{{tuple[2]}}" class="card-img-top" style="max-width: 120px; max-height: auto; display: block; margin: 0 auto;">
+      <div class="card-body">
     
 
       <h5 class="card-title">{{tuple[1]}}</h5>
@@ -53,11 +87,16 @@
       
       <p class="card-text">{{tuple[4]}}</p>
       
+      </div>
     </div>
-  </div>
+    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    {%endfor%}
+
+    
+
   <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-  
-  </div>
-{%endfor%}
+
+
+
 
 {% endblock %}
