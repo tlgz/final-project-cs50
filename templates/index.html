@@ -46,8 +46,20 @@
       <div class="card-body">
     
 
-      <h5 class="card-title">{{tuple[1]}}</h5>
-      <p class="fw-light text-secondary">Review posted by: {{tuple[6]}}</p>
+      <h5 class="card-title text-center">{{tuple[1]}}</h5>
+      <div class="row justify-content-center">
+        <p class="fw-light text-secondary">Review posted by: {{tuple[6]}}</p>
+        <p> &nbsp;</p>
+        {%if session.get("user_id")==tuple[0]:%}
+        <form action="/remove" method="post">
+          <input type="hidden" name="time" value="{{tuple[5]}}">
+          <input type="hidden" name="userid" value="{{tuple[0]}}">
+          <input type="hidden" name="movie" value="{{tuple[1]}}">
+      <button type="submit" style="border: none; background-Color: rgb(255, 255, 255) ; font-size: 10px; color:rgb(168, 58, 33);">Remove</button>
+      </form>
+      {%endif%}
+      </div>
+      
       {%if tuple[3]==1%}
       <i class="bi bi-star-fill "id="1" name="1"></i>
       <i class="bi bi-star-fill bi-star"id="2" name="2"></i>

@@ -25,7 +25,7 @@ def main():
             return redirect("/login")
     post_data= db_cursor.execute("Select posts.*,users.username from posts join users on posts.userid = users.id order by time DESC").fetchall()
     star_data= db_cursor.execute("select movietitle, AVG(stars),imageurl from posts Group by movietitle order by AVG(stars) desc limit 3").fetchall()
-    print(star_data)
+    
     
     
 
@@ -85,7 +85,18 @@ def posted():
     db.commit()
              
     return redirect("/")     
+
+@app.route('/remove',methods=['POST'])
+def remove():
+        
+        if session.get("user_id") is None:
+            return redirect("/login")
+        if int(session.get("user_id"))!=int(request.form.get("userid")):
+              return redirect(url_for('apology', result="Häkkeri älä yritä"))
+        db_cursor.execute("delete from posts where time=? and userid =? and movietitle =?",(request.form.get("time"),request.form.get("userid"),request.form.get("movie")))
     
+        return redirect("/")
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
